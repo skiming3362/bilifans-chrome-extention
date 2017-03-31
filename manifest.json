@@ -9,7 +9,7 @@
   "content_scripts": [
     {
       "matches": ["http://space.bilibili.com/116568/"],
-      "js": ["jquery.min.js","myscript.js"]
+      "js": ["jquery.min.js","bilifans-compiled.js"]
     }
   ]
 }
