@@ -1,10 +1,10 @@
 {
-  "name": "第一个Chrome插件",
+  "name": "bilibilifansSpider",
   "manifest_version": 2,
-  "version": "1.0",
-  "description": "我的第一个Chrome插件，还不错吧",
+  "version": "0.1",
+  "description": "抓取粉丝数据",
   "browser_action": {
-    "default_icon": "1.png"
+    "default_icon": "favicon.png"
   },
   "content_scripts": [
     {
