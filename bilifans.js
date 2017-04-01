@@ -12,7 +12,6 @@ class Up {
 
 	getInfo(mid){//获取指定mid用户的信息并构造post对象user_info
 		// 从B站获取数据
-		setTimeout(()=>{
 			console.log('当前mid '+mid);
 			$.ajax({
 				url: 'http://space.bilibili.com/ajax/member/GetInfo',
@@ -28,11 +27,10 @@ class Up {
 				user_info = {
 					mid: mid,
 					name: data.name,
-					regtime: data.regtime,
+					regtime: data.regtime || 0,
 					sex: data.sex,
-					place: data.place,
+					place: data.place || '',
 					level: data.level_info.current_level,
-					birthday: data.birthday,
 					approve: data.official_verify.type,
 					attention_num: data.attention,
 					sign: data.sign,
@@ -43,44 +41,44 @@ class Up {
 					rank: data.rank
 				};
 				this.postUserInfo(user_info);
-			})
-		}, 100);
-		
+			})		
 	}
 
 	getFansList(){//获取粉丝列表构造post对象user_rela
-		setTimeout(()=>{
-			$.ajax({
-				url: 'http://space.bilibili.com/ajax/friend/GetFansList',
-				type: 'GET',
-				data: {mid: this.mid, pagesize: this.pagesize, page: this.page}
-			}).done((info)=>{
-				// 处理来自B站的数据
-				if(! info.status){
-					console.log('未成功获取用户信息！');
-					return false;
+		$.ajax({
+			url: 'http://space.bilibili.com/ajax/friend/GetFansList',
+			type: 'GET',
+			data: {mid: this.mid, pagesize: this.pagesize, page: this.page}
+		}).done((info)=>{
+			// 处理来自B站的数据
+			if(! info.status){
+				console.log('未成功获取用户信息！');
+				return false;
+			}
+			var data = info.data;
+			var sh = setInterval(()=>{
+				if(this.index==data.list.length){
+					clearInterval(sh);
+					this.page++;		
+					this.list = [];
+					this.index = 0;
+					return;
 				}
-				var data = info.data;
-				setInterval(()=>{
-					if(this.index<this.pagesize){
-						this.user_rela = {
-							user_id: this.mid,
-							follower_id: data.list[this.index].fid
-						};
-						this.postUserRelation();
-						this.list.push(this.user_rela.follower_id);
-						console.log('当前list[] '+this.list[this.index]);
-						console.log('index: '+this.index);
-						this.getInfo(this.list[this.index]);
-						this.index++;
-						}
-				}, 1000)
-				this.page++;		
-				this.list = [];
-				this.index = 0;
-			})
-		}, 100);
-		
+				this.user_rela = {
+					user_id: this.mid,
+					follower_id: data.list[this.index].fid
+				};
+				this.postUserRelation();
+				this.list.push(this.user_rela.follower_id);
+				console.log('当前list[] '+this.list[this.index]);
+				console.log('index: '+this.index);
+				this.getInfo(this.list[this.index]);
+				this.index++;
+			}, parseInt(1000*(Math.random()))+1000)
+			this.list = [];
+
+			
+		})		
 	}
 
 	getTotalpage(){//先获取up主信息
@@ -90,12 +88,18 @@ class Up {
 				data: {mid: this.mid, pagesize: this.pagesize, page: this.page}
 			}).done((info)=>{
 				this.totalpage = info.data.pages;
-				console.log(this.totalpage);
-				setInterval(()=>{
-					if(this.page<=this.totalpage){
-						this.getFansList();
+				console.log('总页数 '+this.totalpage);
+				this.getFansList();
+				console.log('当前页数 '+this.page);
+				var sa = setInterval(()=>{
+					this.getFansList();
+					console.log('当前页数 '+this.page);
+					if(this.page==this.totalpage){
+						clearInterval(sa);
+						console.log('done!')
+						return;
 					}
-				}, 50000)
+				}, 200000)	
 			})
 	}
     
@@ -131,6 +135,7 @@ class Up {
 	}
 
 	start(){
+		this.getInfo(this.mid);
 		this.getTotalpage();	
 	}
 }
