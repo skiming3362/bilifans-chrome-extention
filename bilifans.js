@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-03-30 23:11:08
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-01 23:54:16
+* @Last Modified time: 2017-04-02 22:24:28
 */
 
 class Up {
@@ -29,8 +29,8 @@ class Up {
 					console.log('未成功获取用户信息！');
 					return false;
 				}
-				var data = info.data, user_info;
-				user_info = {
+				var data = info.data;
+				this.user_info = {
 					mid: mid,
 					name: data.name,
 					regtime: data.regtime || 0,
@@ -46,7 +46,7 @@ class Up {
 					play_num: data.playNum,
 					rank: data.rank
 				};
-				this.postUserInfo(user_info);
+				this.postUserInfo();
 			})		
 	}
 
@@ -80,14 +80,14 @@ class Up {
 				console.log('index: '+this.index);
 				this.getInfo(this.list[this.index]);
 				this.index++;
-			}, parseInt(1000*(Math.random()))+1000)
+			}, parseInt(300*(Math.random()))+1200)
 			this.list = [];
 
 			
 		})		
 	}
 
-	getTotalpage(){//先获取up主信息
+	getTotalpage(){
 		$.ajax({
 				url: 'http://space.bilibili.com/ajax/friend/GetFansList',
 				type: 'GET',
@@ -105,7 +105,7 @@ class Up {
 						console.log('done!')
 						return;
 					}
-				}, 200000)	
+				}, 150000)	
 			})
 	}
     
@@ -116,8 +116,8 @@ class Up {
 			data: this.user_rela,
 			crossDomain: true
 		})
-		.done(() => {
-			console.log("success");
+		.done((data) => {
+			console.log("post UserRelation: "+data.follower_id+" success");
 		})
 		.fail((e) => {
 			console.log("error: "+JSON.stringify(e));
@@ -125,15 +125,15 @@ class Up {
 		
 	}
 
-	postUserInfo(userInfo){
+	postUserInfo(){
 		$.ajax({
 			url: 'http://127.0.0.1:9000/api/UserInfo',
 			type: 'POST',
-			data: userInfo,
+			data: this.user_info,
 			crossDomain: true
 		})
-		.done(() => {
-			console.log("success");
+		.done((data) => {
+			console.log("post UserInfo: "+data.mid+" success");
 		})
 		.fail((e) => {
 			console.log("error: "+JSON.stringify(e));

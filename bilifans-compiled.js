@@ -8,7 +8,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 * @Author: skiming
 * @Date:   2017-03-30 23:11:08
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-01 23:54:16
+* @Last Modified time: 2017-04-02 22:24:28
 */
 
 var Up = function () {
@@ -39,9 +39,8 @@ var Up = function () {
 					console.log('未成功获取用户信息！');
 					return false;
 				}
-				var data = info.data,
-				    user_info;
-				user_info = {
+				var data = info.data;
+				_this.user_info = {
 					mid: mid,
 					name: data.name,
 					regtime: data.regtime || 0,
@@ -57,7 +56,7 @@ var Up = function () {
 					play_num: data.playNum,
 					rank: data.rank
 				};
-				_this.postUserInfo(user_info);
+				_this.postUserInfo();
 			});
 		}
 	}, {
@@ -95,7 +94,7 @@ var Up = function () {
 					console.log('index: ' + _this2.index);
 					_this2.getInfo(_this2.list[_this2.index]);
 					_this2.index++;
-				}, parseInt(1000 * Math.random()) + 1000);
+				}, parseInt(300 * Math.random()) + 1200);
 				_this2.list = [];
 			});
 		}
@@ -104,7 +103,6 @@ var Up = function () {
 		value: function getTotalpage() {
 			var _this3 = this;
 
-			//先获取up主信息
 			$.ajax({
 				url: 'http://space.bilibili.com/ajax/friend/GetFansList',
 				type: 'GET',
@@ -122,7 +120,7 @@ var Up = function () {
 						console.log('done!');
 						return;
 					}
-				}, 200000);
+				}, 150000);
 			});
 		}
 	}, {
@@ -133,22 +131,22 @@ var Up = function () {
 				type: 'POST',
 				data: this.user_rela,
 				crossDomain: true
-			}).done(function () {
-				console.log("success");
+			}).done(function (data) {
+				console.log("post UserRelation: " + data.follower_id + " success");
 			}).fail(function (e) {
 				console.log("error: " + JSON.stringify(e));
 			});
 		}
 	}, {
 		key: 'postUserInfo',
-		value: function postUserInfo(userInfo) {
+		value: function postUserInfo() {
 			$.ajax({
 				url: 'http://127.0.0.1:9000/api/UserInfo',
 				type: 'POST',
-				data: userInfo,
+				data: this.user_info,
 				crossDomain: true
-			}).done(function () {
-				console.log("success");
+			}).done(function (data) {
+				console.log("post UserInfo: " + data.mid + " success");
 			}).fail(function (e) {
 				console.log("error: " + JSON.stringify(e));
 			});
