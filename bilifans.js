@@ -2,7 +2,7 @@
 * @Author: skiming
 * @Date:   2017-03-30 23:11:08
 * @Last Modified by:   skiming
-* @Last Modified time: 2017-04-02 22:24:28
+* @Last Modified time: 2017-04-03 10:12:35
 */
 
 class Up {
@@ -61,18 +61,23 @@ class Up {
 				console.log('未成功获取用户信息！');
 				return false;
 			}
+			console.log('当前页数：'+ this.page); 
 			var data = info.data;
+			this.list = [];
 			var sh = setInterval(()=>{
 				if(this.index==data.list.length){
 					clearInterval(sh);
-					this.page++;		
+					this.page--;	
 					this.list = [];
 					this.index = 0;
-					return;
+					return false;
 				}
 				this.user_rela = {
 					user_id: this.mid,
-					follower_id: data.list[this.index].fid
+					follower_id: data.list[this.index].fid,
+					addtime: data.list[this.index].addtime,
+					charge: data.list[this.index].is_charge,
+					attentioned: data.list[this.index].attentioned
 				};
 				this.postUserRelation();
 				this.list.push(this.user_rela.follower_id);
@@ -80,10 +85,7 @@ class Up {
 				console.log('index: '+this.index);
 				this.getInfo(this.list[this.index]);
 				this.index++;
-			}, parseInt(300*(Math.random()))+1200)
-			this.list = [];
-
-			
+			}, parseInt(280*(Math.random()))+1500)
 		})		
 	}
 
@@ -96,16 +98,14 @@ class Up {
 				this.totalpage = info.data.pages;
 				console.log('总页数 '+this.totalpage);
 				this.getFansList();
-				console.log('当前页数 '+this.page);
 				var sa = setInterval(()=>{
-					this.getFansList();
-					console.log('当前页数 '+this.page);
-					if(this.page==this.totalpage){
+					if(this.page == 0 ){
 						clearInterval(sa);
-						console.log('done!')
-						return;
+						console.log('done!');
+						return false;
 					}
-				}, 150000)	
+					this.getFansList();
+				}, 180000)	
 			})
 	}
     
