@@ -1,11 +1,11 @@
 # bilifans-chrome-extention
-抓取<b style="">已登录UP主</b>B站粉丝数据的爬虫
-# B站API
-## 获取指定mid用户的信息
-
-URL: http://space.bilibili.com/ajax/member/GetInfo
-Type: "POST"
-Data: {mid: Str}
+chrome插件 抓取<b style="">已登录UP主</b>B站粉丝数据的爬虫,将JSON数据中的有用数据解析存放进数据库 
+## B站API
+### 获取指定mid用户的信息
+<pre>
+url: http://space.bilibili.com/ajax/member/GetInfo
+type: "POST"
+aata: {mid: Str}
 format: {
 	status: Boolean,                             #为true时才能获取data
 	data: {
@@ -64,11 +64,12 @@ format: {
 		toutuId: Num                               #头图id
 	}
 }
-
-## 获取粉丝列表
-URL: http://space.bilibili.com/ajax/friend/GetFansList
-Type: "GET"
-Data: {mid: Num,pagesize: Num,page: Num}           #查询up主mid,每页显示粉丝数，粉丝页数
+</pre>
+### 获取粉丝列表
+<pre>
+url: http://space.bilibili.com/ajax/friend/GetFansList
+type: "GET"
+data: {mid: Num,pagesize: Num,page: Num}           #查询up主mid,每页显示粉丝数，粉丝页数
 format:{
 	status: Boolean,                                 #为true时才能获取data
 	data:{
@@ -94,3 +95,36 @@ format:{
 		]
 	}
 }
+</pre>
+## 本地web服务器API
+### post 用户关系
+url: 'http://127.0.0.1:9000/api/UserRelation',
+type: 'POST',
+data: {
+	user_id: Num,													UP主MID
+	follower_id: Num,											关注者MID
+	addtime: Timestamp,										关注时间
+	charge: Boolean,											是否充电
+	attentioned: Num											相互关注
+}
+### post 用户信息
+<pre>
+url: 'http://127.0.0.1:9000/api/UserInfo',
+type: 'POST',
+data: {
+	mid: Num,                             用户MID
+	name: Str,                            昵称
+	regtime: timestamp,                   注册时间
+	sex: Str,                             性别
+	place: Str,                           地址
+	level: Num,                           等级
+	approve: Num,                         认证
+	attention_num: Num,                   关注数
+	sign: Str,                            签名
+	description: Str,                     简介
+	face: Str,                            头像地址
+	fans_num: Num,                        粉丝数
+	play_num: Num,                        视频播放数
+	rank: Num                             权限
+}
+</pre>
