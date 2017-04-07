@@ -6,7 +6,7 @@ chrome插件 抓取<b style="">已登录UP主</b>B站粉丝数据的爬虫,将JS
 <pre>
 url: http://space.bilibili.com/ajax/member/GetInfo
 type: "POST"
-aata: {mid: Str}
+data: {mid: Str}
 format: {
   status: Boolean,                             #为true时才能获取data
   data: {
