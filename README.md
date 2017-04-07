@@ -78,16 +78,16 @@ format:{
     list: [                                    #粉丝Array,总数为pagesize,最大为100
       0: {
         addtime: Timestamp,                    #关注时间
-        attentioned: Num,        			   #相互关注
-        face: Str,               			   #头像
-        fid: Num,                			   #粉丝uid
-        is_charge: false,        			   #是否充电
+        attentioned: Num,        	       #相互关注
+        face: Str,               	       #头像
+        fid: Num,                	       #粉丝uid
+        is_charge: false,        	       #是否充电
         official_verify:{
-          desc: Str,       					   #认证用户为认证信息
-          type: Num        					   #未认证为-1，个人认证0，团体认证1
+          desc: Str,       		       #认证用户为认证信息
+          type: Num        		       #未认证为-1，个人认证0，团体认证1
         },
-        record_id: Num,         		       #未知
-        uname: Str               			   #粉丝昵称
+        record_id: Num,         	       #未知
+        uname: Str                             #粉丝昵称
       },
       1:{
       },
@@ -102,11 +102,11 @@ format:{
 url: 'http://127.0.0.1:9000/api/UserRelation',
 type: 'POST',
 data: {
-  user_id: Num,							UP主MID
-  follower_id: Num,						关注者MID
-  addtime: Timestamp,					关注时间
-  charge: Boolean,						是否充电
-  attentioned: Num						相互关注
+  user_id: Num,				UP主MID
+  follower_id: Num,			关注者MID
+  addtime: Timestamp,			关注时间
+  charge: Boolean,			是否充电
+  attentioned: Num			相互关注
 }
 </pre>
 ### post 用户信息
