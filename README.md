@@ -3,7 +3,6 @@ chrome插件 抓取<b style="">已登录UP主</b>B站粉丝数据的爬虫,将JS
 ## B站API
 ### 获取指定mid用户的信息
 <pre>
-<code>
 url: http://space.bilibili.com/ajax/member/GetInfo
 type: "POST"
 aata: {mid: Str}
@@ -65,13 +64,9 @@ format: {
 		toutuId: Num                               #头图id
 	}
 }
-</code>
 </pre>
-
 ### 获取粉丝列表
-
 <pre>
-<code>
 url: http://space.bilibili.com/ajax/friend/GetFansList
 type: "GET"
 data: {mid: Num,pagesize: Num,page: Num}           #查询up主mid,每页显示粉丝数，粉丝页数
@@ -100,12 +95,10 @@ format:{
 		]
 	}
 }
-</code>
 </pre>
 ## 本地web服务器API
 ### post 用户关系
 <pre>
-<code>
 url: 'http://127.0.0.1:9000/api/UserRelation',
 type: 'POST',
 data: {
@@ -115,11 +108,9 @@ data: {
 	charge: Boolean,											是否充电
 	attentioned: Num											相互关注
 }
-</code>
 </pre>
 ### post 用户信息
 <pre>
-<code>
 url: 'http://127.0.0.1:9000/api/UserInfo',
 type: 'POST',
 data: {
@@ -138,5 +129,4 @@ data: {
 	play_num: Num,                        视频播放数
 	rank: Num                             权限
 }
-</code>
 </pre>
