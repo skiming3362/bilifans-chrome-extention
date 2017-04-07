@@ -2,11 +2,12 @@
 抓取<b style="">已登录UP主</b>B站粉丝数据的爬虫
 # B站API
 <h3>获取指定mid用户的信息</h3>
+
 	URL: http://space.bilibili.com/ajax/member/GetInfo
 	Type: "POST"
 	Data: {mid: Str}
 	format: {
-		status: Boolean,                             #为true时才能获取data
+		status: Boolean,                                   #为true时才能获取data
 		data: {
 			DisplayRank: Str,                          #用户标识, 从 rank 衍生出, 影响实际显示的头像边框等
 			approve: Boolean,                          #是否为认证帐号
@@ -63,29 +64,30 @@
 			toutuId: Num                               #头图id
 		}
 	}
-	
-  <h3>获取粉丝列表</h3>
+
+<h3>获取粉丝列表</h3>
+
 	URL: http://space.bilibili.com/ajax/friend/GetFansList
 	Type: "GET"
-	Data: {mid: Num,pagesize: Num,page: Num}      #查询up主mid,每页显示粉丝数，粉丝页数
+	Data: {mid: Num,pagesize: Num,page: Num}                 #查询up主mid,每页显示粉丝数，粉丝页数
 	format:{
-		status: Boolean,                                              #为true时才能获取data
+		status: Boolean,                                 #为true时才能获取data
 		data:{
-			pages: Num,                                         #粉丝页数，与pagesize有关
-			results: Num,                                       #粉丝数
-			list: [                                                      #粉丝Array,总数为pagesize,最大为100
+			pages: Num,                              #粉丝页数，与pagesize有关
+			results: Num,                            #粉丝数
+			list: [                                  #粉丝Array,总数为pagesize,最大为100
 				0: {
-					addtime: Timestamp,  #关注时间
-					attentioned: Num,       #相互关注
-					face: Str,                        #头像
-					fid: Num,                       #粉丝uid
-					is_charge: false,           #是否充电
+					addtime: Timestamp,      #关注时间
+					attentioned: Num,        #相互关注
+					face: Str,               #头像
+					fid: Num,                #粉丝uid
+					is_charge: false,        #是否充电
 					official_verify:{
-						desc: Str,            #认证用户为认证信息
-						type: Num          #未认证为-1，个人认证0，团体认证1
+						desc: Str,       #认证用户为认证信息
+						type: Num        #未认证为-1，个人认证0，团体认证1
 					},
 					record_id: Num,          #未知
-					uname: Str                   #粉丝昵称
+					uname: Str               #粉丝昵称
 				},
 				1:{
 				},
